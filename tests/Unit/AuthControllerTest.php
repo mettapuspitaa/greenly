@@ -125,7 +125,7 @@ class AuthControllerTest extends TestCase
         ]);
 
         // Assert
-        $response->assertRedirect('/profile');
+        $response->assertRedirect('/uprofile');
         $response->assertSessionHas('success', 'Profile updated successfully!');
         $this->assertDatabaseHas('useraccount', [
             'email' => 'updated@example.com',
