@@ -14,6 +14,7 @@ class EmissionController extends Controller
         return view('admin.emisi-list', compact('emissions')); // Return to view with data
     }
     
+    
     public function store(Request $request)
     {
         $request->validate([
@@ -27,10 +28,12 @@ class EmissionController extends Controller
         return redirect()->route('emission.index')->with('success', 'Emission created successfully.');
     }
     
+    
     public function edit(Emission $emission)
     {
         return view('admin.edit', compact('emission')); // Pass the emission to the edit view
     }
+    
     
     public function update(Request $request, Emission $emission)
     {
@@ -44,6 +47,7 @@ class EmissionController extends Controller
 
         return redirect()->route('emission.index')->with('success', 'Emission updated successfully.');
     }
+    
     
     public function destroy(Emission $emission)
     {
