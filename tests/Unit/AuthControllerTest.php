@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Hash;
 class AuthControllerTest extends TestCase
 {
     use RefreshDatabase;
-
+    
+    /** @test */
     public function login_success()
     {
         $user = UserAccount::factory()->create([

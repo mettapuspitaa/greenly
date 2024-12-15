@@ -16,7 +16,7 @@ class EmissionControllerTest extends TestCase
         // Arrange
         $data = [
             'name' => 'Test Emission',
-            'type' => 'Carbon',
+            'type' => 'transportation',
             'emission' => 123.45,
         ];
 
