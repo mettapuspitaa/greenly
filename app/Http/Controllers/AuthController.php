@@ -101,7 +101,10 @@ class AuthController extends Controller
 
         $user->save();
 
-        return redirect('/profile')->with('success', 'Profile updated successfully!');
+        if($user->role == 'admin'){
+            return redirect('/profile')->with('success', 'Profile updated successfully!');
+        }
+        return redirect('/uprofile')->with('success', 'Profile updated successfully!');
     }
 
 }
