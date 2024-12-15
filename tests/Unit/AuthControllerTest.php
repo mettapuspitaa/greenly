@@ -11,23 +11,19 @@ class AuthControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
     public function login_success()
     {
-        // Arrange
         $user = UserAccount::factory()->create([
             'email' => 'test@example.com',
             'password' => Hash::make('password123'),
             'role' => 'admin',
         ]);
 
-        // Act
         $response = $this->post('/loginin', [
             'email' => 'test@example.com',
             'password' => 'password123',
         ]);
 
-        // Assert
         $response->assertRedirect(route('emission.index'));
         $this->assertAuthenticatedAs($user);
     }
