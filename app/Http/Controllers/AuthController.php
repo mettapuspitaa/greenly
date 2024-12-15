@@ -10,6 +10,39 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+        $user = UserAccount::where('email', $credentials['email'])->first();
+
+        if (!$user) {
+            return redirect('/login')->with('error', 'No account found with this email.');
+        }
+        
+        if (Auth::attempt($credentials)) {
+            if ($user->role == 'admin') {
+                return redirect()->route('emission.index');
+            }
+            return redirect('/dashboard');
+        }
+        
+        return redirect('/login')->with('error', 'Invalid credentials. Please try again.');        
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        // Invalidate the user's session
+        $request->session()->invalidate();
+
+        // Regenerate the session token to prevent session fixation attacks
+        $request->session()->regenerateToken();
+
+        // Redirect to the login page with a success message
+        return redirect('/login')->with('success', 'Logged out successfully!');
+    }
+    
     public function register(Request $request)
     {
         // Validasi input dari pengguna
