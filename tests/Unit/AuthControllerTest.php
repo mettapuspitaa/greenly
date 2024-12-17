@@ -11,9 +11,6 @@ class AuthControllerTest extends TestCase
 {
     use RefreshDatabase;
     
-
-
-    /** coba test */
     /** @test */
     public function login_success()
     {
@@ -32,6 +29,7 @@ class AuthControllerTest extends TestCase
         $this->assertAuthenticatedAs($user);
     }
 
+    
     /** @test */
     public function login_fail_invalid_credentials()
     {
