@@ -51,7 +51,7 @@
                             </a>
                         </li>
                         <li class="nav-item me-3">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/history">
                                 <i class="fa-solid fa-file"></i>
                                 History
                             </a>

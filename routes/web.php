@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmissionController;
+use App\Http\Controllers\HistoryController;
 
 Route::get('/', function () {return view('auth.signup');});
 Route::get('/login', function () {return view('auth.login');});
@@ -25,3 +26,4 @@ Route::post('/profile/update', [AuthController::class, 'updateProfile'])->name('
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/emission-all-categories', [EmissionController::class, 'fetchAllCategories'])->name('emission.allCategories');
 
+Route::get('/history', [HistoryController::class, 'index']);
