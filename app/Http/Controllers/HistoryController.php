@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\HistoryCarbonFootprint;
+use App\Models\History;
 use Illuminate\Http\Request;
 
 class HistoryController extends Controller
