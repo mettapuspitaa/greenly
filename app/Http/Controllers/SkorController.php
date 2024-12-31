@@ -34,7 +34,7 @@ class SkorController extends Controller
         History::create([
             'skor_id' => $skor->id,
             'user_id' => Auth::id(),
-            'rekomendasi' => 'Kurangi konsumsi energi untuk mengurangi jejak karbon', // Anda bisa menyesuaikan rekomendasi
+            'rekomendasi' => 'Kurangi konsumsi energi untuk mengurangi jejak karbon',
             'date' => now(),
         ]);
 

@@ -10,7 +10,7 @@ class HistoryController extends Controller
     
     public function index()
     {
-        $histories = HistoryCarbonFootprint::with(['skor', 'user'])->get();
+        $histories = History::with(['skor', 'user'])->get();
         return view('user.history', compact('histories'));
     }
 }

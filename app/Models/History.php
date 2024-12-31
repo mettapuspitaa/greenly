@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Skor;
+use App\Models\SkorC;
 use App\Models\UserAccount;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -18,12 +19,15 @@ class History extends Model
         'user_id',
         'rekomendasi',
         'date',
-    ];    
-
+    ];
     public function skor()
     {
-        return $this->belongsTo(Skor::class);
-    }
+        return $this->belongsTo(SkorC::class, 'skor_id');
+    }    
+    public function skorC()
+    {
+        return $this->belongsTo(Skor::class, 'skor_id');
+    }    
 
     public function user()
     {
