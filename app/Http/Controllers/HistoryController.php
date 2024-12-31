@@ -10,7 +10,9 @@ class HistoryController extends Controller
     
     public function index()
     {
-        $histories = History::with(['skor', 'user'])->get();
+        $histories = History::with(['skor', 'user'])
+        ->where('user_id', auth()->id())
+        ->get();
         return view('user.history', compact('histories'));
     }
 }
