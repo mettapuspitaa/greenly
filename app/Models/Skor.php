@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\HistoryCarbonFootprint;
+use App\Models\History;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Skor extends Model
 {
+    use HasFactory;
+
     protected $table = 'skor';
-    protected $primaryKey = 'skor_id';
+
     protected $fillable = [
         'emission_km',
         'emission_kwh',
@@ -15,10 +18,10 @@ class Skor extends Model
         'food',
         'energy',
         'transport',
-    ];
+    ];    
 
     public function history()
     {
-        return $this->hasMany(HistoryCarbonFootprint::class, 'skor_id');
+        return $this->hasMany(History::class, 'skor_id');
     }
 }
