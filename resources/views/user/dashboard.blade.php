@@ -15,11 +15,12 @@
       }
       
       /* Set the overall background color */
-      body {
-          background-color: #F2F5F6; /* Light gray background color */
-          margin: 0; /* Remove any default margin */
-          padding: 0; /* Remove any default padding */
-      }
+    body {
+        background-color: #F2F5F6; /* Light gray background color */
+        margin: 0; /* Remove any default margin */
+        padding: 0; /* Remove any default padding */
+        overflow-x: hidden; /* Prevent horizontal scrolling */
+    }
     </style>
     </head>
     <body>
@@ -88,7 +89,107 @@
                 </div>
             </div>
         </nav>
-        <h1 class="p5">Dashboard</h1>
+        <div class="row">
+            <div class="col">
+                <div class="row ms-1 p-3">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row d-flex justify-content-start p-3">
+                                    <img class="col-2" src="assets/bus.png" alt="Logo">
+                                    <h4 class="card-title p-1 col">Transportation</h4>
+                                </div>
+                                <div class="row d-flex justify-content-between align-items-center mt-5 p-3">
+                                    <div class="col-8 d-flex">
+                                        <h1 class="form-label mb-0" name="emission_km">
+                                            {{ $latestSkor->emission_km ?? '0' }}
+                                        </h1>
+                                        <p class="mt-3 p-1">kg CO₂e/kg</p>
+                                    </div>
+                                    <img class="col-2" src="assets/graph1.png" alt="Graph">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row d-flex justify-content-start p-3">
+                                    <img class="col-2" src="assets/diet.png" alt="Logo">
+                                    <h4 class="card-title p-1 col">Food</h4>
+                                </div>
+                                <div class="row d-flex justify-content-between align-items-center mt-5 p-3">
+                                    <div class="col-8 d-flex">
+                                        <h1 class="form-label mb-0" name="emission_food">
+                                            {{ $latestSkor->emission_food ?? '0' }}
+                                        </h1>
+                                        <p class="mt-3 p-1">kg CO₂e/kg</p>
+                                    </div>
+                                    <img class="col-2" src="assets/graph2.png" alt="Graph">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row ms-1 p-3">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row d-flex justify-content-start p-3">
+                                    <img class="col-2 " src="assets/bus.png" alt="Logo">
+                                    <h4 class="card-title p-1 col">Energy</h4>
+                                </div>
+                                <div class="row d-flex justify-content-between align-items-center mt-5 p-3">
+                                    <div class="col-8 d-flex">
+                                        <h1 class="form-label mb-0" name="emission_kwh">
+                                            {{ $latestSkor->emission_kwh ?? '0' }}
+                                        </h1>
+                                        <p class="mt-3 p-1">kg CO₂e/kg</p>
+                                    </div>
+                                    <img class="col-2" src="assets/graph3.png" alt="Logo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row d-flex justify-content-start p-3">
+                                    <img class="col-2 " src="assets/bus.png" alt="Logo">
+                                    <h4 class="card-title p-1 col">Emission</h4>
+                                </div>
+                                <div class="row d-flex justify-content-between align-items-center mt-5 p-3">
+                                    <div class="col-8 d-flex">
+                                        <h1 class="form-label mb-0" name="totalemission">
+                                            {{ $latestSkor->emission_food + $latestSkor->emission_kwh + $latestSkor->emission_km ?? '0' }}
+                                        </h1>
+                                        <p class="mt-3 p-1">kg CO₂e/kg</p>
+                                    </div>
+                                    <img class="col-2" src="assets/graph4.png" alt="Logo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ms-1 p-3">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            <div class="col p-3 me-4">
+                <div class="card">
+                    <div class="card-body d-flex justify-content-center">
+                        <h1 class="p-5">Leaderboard Today</h1>
+                    </div> 
+                </div> 
+            </div> 
+        </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>
 </html> 

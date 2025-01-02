@@ -20,6 +20,7 @@
                 background-color: #F2F5F6; /* Light gray background color */
                 margin: 0; /* Remove any default margin */
                 padding: 0; /* Remove any default padding */
+                overflow-x: hidden; /* Prevent horizontal scrolling */
             }
                 .btn-outline-custom {
                     background-color: #136370;
