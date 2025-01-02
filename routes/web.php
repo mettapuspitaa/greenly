@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmissionController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\SkorController;
+use App\Http\Controllers\LeaderboardController;
 
 Route::get('/', function () {return view('auth.signup');});
 Route::get('/login', function () {return view('auth.login');});
@@ -29,3 +30,4 @@ Route::get('/emission-all-categories', [EmissionController::class, 'fetchAllCate
 
 Route::get('/history', [HistoryController::class, 'index']);
 Route::post('/save-skor', [SkorController::class, 'store'])->middleware('auth')->name('save-skor');
+Route::get('/leaderboard', [LeaderboardController::class, 'index']);

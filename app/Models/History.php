@@ -23,12 +23,11 @@ class History extends Model
     public function skor()
     {
         return $this->belongsTo(SkorC::class, 'skor_id');
-    }    
+    }
     public function skorC()
     {
         return $this->belongsTo(Skor::class, 'skor_id');
-    }    
-
+    }         
     public function user()
     {
         return $this->belongsTo(UserAccount::class, 'user_id');

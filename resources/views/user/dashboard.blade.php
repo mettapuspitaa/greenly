@@ -57,7 +57,7 @@
                             </a>
                         </li>
                         <li class="nav-item me-3">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/leaderboard">
                                 <i class="fa-solid fa-ranking-star"></i>
                                 Leaderboard
                             </a>
