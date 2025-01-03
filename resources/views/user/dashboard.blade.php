@@ -134,7 +134,7 @@
                                 </a>
                             </li>
                             <li class="nav-item me-3">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="/educontent">
                                     <i class="fa-solid fa-image"></i>
                                     Education Content
                                 </a>

@@ -28,6 +28,8 @@ Route::get('/content-list', [ContentController::class, 'index'])->name('content.
 Route::post('/content', [ContentController::class, 'store'])->name('content.store');
 Route::put('/content/{id}', [ContentController::class, 'update'])->name('content.update');
 Route::delete('/content/{id}', [ContentController::class, 'destroy'])->name('content.destroy');
+Route::get('/educontent', [ContentController::class, 'uindex'])->name('content.uindex');
+
 
 
 Route::get('/profile', function () {return view('admin.profile');})->name('profile');

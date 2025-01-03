@@ -156,7 +156,7 @@
             <button type="button" class="btn-close mb-4" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
             <div class="modal-body">
-                <form id="addNewForm" action="{{ route('content.store') }}" method="POST">
+                <form id="addNewForm" action="{{ route('content.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
@@ -167,8 +167,8 @@
                         <textarea type="text" class="form-control" id="name" name="description" required></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="name" class="form-label">Path</label>
-                        <input type="text" class="form-control" id="name" name="path" value="http://"required>
+                        <label for="path" class="form-label">File</label>
+                        <input type="file" class="form-control" id="path" name="path" required>
                     </div>
                     <button type="submit" class="btn btn-custom">Save</button>
                 </form>
@@ -185,7 +185,7 @@
                         <h5 class="modal-title" id="editModalLabel">Edit Content</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="{{ route('content.update', $content->content_id) }}" method="POST">
+                    <form action="{{ route('content.update', $content->content_id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="modal-body">
@@ -198,8 +198,8 @@
                                 <textarea class="form-control" name="description" required>{{ $content->description }}</textarea>
                             </div>
                             <div class="mb-3">
-                                <label for="path" class="form-label">Path</label>
-                                <input type="text" class="form-control" name="path" value="{{ $content->path }}" required>
+                                <label for="path" class="form-label">File</label>
+                                <input type="file" class="form-control" name="path">
                             </div>
                         </div>
                         <div class="modal-footer">
