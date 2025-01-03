@@ -92,7 +92,7 @@
     </nav>
     <div class="p-5">
         <div class="d-flex justify-content-between align-items-center">
-            <h2>Manage Emission Category</h2>
+            <h2>Manage Contents</h2>
             <!-- Button to Open Modal -->
             <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#addNewModal">
                 Add New
@@ -109,31 +109,36 @@
                     <tr>
                         <th scope="col">No</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Emission</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Path</th>
+                        <th scope="col">Date</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($emissions as $emission)
+                    @forelse($contents as $key => $content)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $emission->name }}</td>
-                            <td>{{ ucfirst($emission->type) }}</td>
-                            <td>{{ $emission->emission }}</td>
+                            <td>{{ $key + 1 }}</td>
+                            <td>{{ $content->name }}</td>
+                            <td>{{ $content->description }}</td>
+                            <td>{{ $content->path }}</td>
+                            <td>{{ $content->date }}</td>
                             <td>
-                                <!-- Edit Button -->
-                                <a href="{{ route('emission.edit', $emission->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                
-                                <!-- Delete Button -->
-                                <form action="{{ route('emission.destroy', $emission->id) }}" method="POST" style="display:inline-block;">
+                                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal{{ $content->content_id }}">
+                                    Edit
+                                </button>
+                                <form action="{{ route('content.destroy', $content->content_id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this emission?')">Delete</button>
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
                                 </form>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="5">No contents found.</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -145,29 +150,25 @@
         <div class="modal-content">
           <div class="modal-header">
             <div class="col">
-                <h5 class="modal-title" id="addNewModalLabel">Add Emission Category</h5>
-                <p style="font-size: 15px;">Adding new data on Emission Category</p>
+                <h5 class="modal-title" id="addNewModalLabel">Add New Content</h5>
+                <p style="font-size: 15px;">Adding new content data</p>
             </div>
             <button type="button" class="btn-close mb-4" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
             <div class="modal-body">
-                <form id="addNewForm" action="{{ route('emission.store') }}" method="POST">
+                <form id="addNewForm" action="{{ route('content.store') }}" method="POST">
                     @csrf
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control" id="name" name="name" required>
                     </div>
                     <div class="mb-3">
-                        <label for="type" class="form-label">Type</label>
-                        <select class="form-control" id="type" name="type" required>
-                            <option value="food">Food</option>
-                            <option value="energy">Energy</option>
-                            <option value="transportation">Transportation</option>
-                        </select>
+                        <label for="name" class="form-label">Description</label>
+                        <textarea type="text" class="form-control" id="name" name="description" required></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="emission" class="form-label">Emission(for each 1/4kg)</label>
-                        <input type="number" step="0.01" class="form-control" id="emission" name="emission" required>
+                        <label for="name" class="form-label">Path</label>
+                        <input type="text" class="form-control" id="name" name="path" value="http://"required>
                     </div>
                     <button type="submit" class="btn btn-custom">Save</button>
                 </form>
@@ -176,6 +177,39 @@
         </div>
       </div>
     </div>
+    @foreach($contents as $content)
+        <div class="modal fade" id="editModal{{ $content->content_id }}" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Edit Content</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{ route('content.update', $content->content_id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" name="name" value="{{ $content->name }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" name="description" required>{{ $content->description }}</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="path" class="form-label">Path</label>
+                                <input type="text" class="form-control" name="path" value="{{ $content->path }}" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
