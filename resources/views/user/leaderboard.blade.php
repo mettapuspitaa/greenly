@@ -7,8 +7,18 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <style>
+        .navbar-brand img {
+          height: 70px; /* Set the height of the image */
+          max-width: 100%; /* Ensure the image doesn't exceed the width of its container */
+          object-fit: contain; /* Ensure the image scales correctly without stretching */
+        }
+      
+      /* Set the overall background color */
         body {
-            background-color: #F2F5F6;
+            background-color: #F2F5F6; /* Light gray background color */
+            margin: 0; /* Remove any default margin */
+            padding: 0; /* Remove any default padding */
+            overflow-x: hidden; /* Prevent horizontal scrolling */
         }
 
         .podium {
