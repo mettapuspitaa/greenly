@@ -44,69 +44,69 @@
     </head>
     <body>
     <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <!-- Navbar Brand -->
-            <a class="navbar-brand me-5" href="#">
-                <img src="assets/navlogo.png" alt="Logo">
-            </a>
-
-            <!-- Toggle Button for Mobile View -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Navbar Links -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item me-3">
-                        <a class="nav-link " href="#">
-                            <i class="fa-solid fa-house"></i>
-                            Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item me-3">
-                        <a class="nav-link " href="/carboncalc">
-                            <i class="fa-solid fa-shoe-prints"></i>
-                            Carbon Calculate
-                        </a>
-                    </li>
-                    <li class="nav-item me-3">
-                        <a class="nav-link" href="#">
-                            <i class="fa-solid fa-file"></i>
-                            History
-                        </a>
-                    </li>
-                    <li class="nav-item me-3">
-                        <a class="nav-link" href="#">
-                            <i class="fa-solid fa-ranking-star"></i>
-                            Leaderboard
-                        </a>
-                    </li>
-                    <li class="nav-item me-3">
-                        <a class="nav-link" href="#">
-                            <i class="fa-solid fa-image"></i>
-                            Education Content
-                        </a>
-                    </li>
-                </ul>
-
-                <!-- Profile Avatar and Logout Icon -->
-                <div class="d-flex align-items-center">
-                    <!-- Profile Avatar -->
-                    <a href="{{ route('userprofile') }}" class="nav-link me-3 text-decoration-none">
-                        {{Auth::user()->name;}}
-                        <img src="assets/avatar.png" alt="Profile Avatar" class="rounded-circle" style="height: 40px; width: 40px; object-fit: cover;">
+                <div class="container-fluid">
+                    <!-- Navbar Brand -->
+                    <a class="navbar-brand me-5" href="#">
+                        <img src="assets/navlogo.png" alt="Logo">
                     </a>
-                    <!-- Logout Icon -->
-                    <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: inline;">
-                        @csrf
-                        <button type="submit" class="btn btn-link text-dark text-decoration-none p-0">
-                            <i class="fa-solid fa-right-from-bracket fa-lg"></i>
-                        </button>
-                    </form>
+
+                    <!-- Toggle Button for Mobile View -->
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <!-- Navbar Links -->
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item me-3">
+                                <a class="nav-link " href="/dashboard">
+                                    <i class="fa-solid fa-house"></i>
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item me-3">
+                                <a class="nav-link active " href="/carboncalc">
+                                    <i class="fa-solid fa-shoe-prints"></i>
+                                    Carbon Calculate
+                                </a>
+                            </li>
+                            <li class="nav-item me-3">
+                                <a class="nav-link" href="/history">
+                                    <i class="fa-solid fa-file"></i>
+                                    History
+                                </a>
+                            </li>
+                            <li class="nav-item me-3">
+                                <a class="nav-link" href="/leaderboard">
+                                    <i class="fa-solid fa-ranking-star"></i>
+                                    Leaderboard
+                                </a>
+                            </li>
+                            <li class="nav-item me-3">
+                                <a class="nav-link" href="#">
+                                    <i class="fa-solid fa-image"></i>
+                                    Education Content
+                                </a>
+                            </li>
+                        </ul>
+
+                        <!-- Profile Avatar and Logout Icon -->
+                        <div class="d-flex align-items-center">
+                            <!-- Profile Avatar -->
+                            <a href="{{ route('userprofile') }}" class="nav-link me-3 text-decoration-none">
+                                {{Auth::user()->name;}}
+                                <img src="assets/avatar.png" alt="Profile Avatar" class="rounded-circle" style="height: 40px; width: 40px; object-fit: cover;">
+                            </a>
+                            <!-- Logout Icon -->
+                            <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-link text-dark text-decoration-none p-0">
+                                    <i class="fa-solid fa-right-from-bracket fa-lg"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
     </nav>
     <div class="p-5">
         <div class="row mt-5 p-2">
