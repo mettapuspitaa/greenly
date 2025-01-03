@@ -98,6 +98,7 @@
                         <!-- Profile Avatar -->
                         <a href="{{ route('userprofile') }}" class="nav-link me-3 text-decoration-none">
                             {{Auth::user()->name;}}
+
                             <img src="assets/avatar.png" alt="Profile Avatar" class="rounded-circle" style="height: 40px; width: 40px; object-fit: cover;">
                         </a>
                         <!-- Logout Icon -->
@@ -115,12 +116,12 @@
             <div class="row">
                 <!-- Loop through contents -->
                 @foreach ($contents as $content)
-                <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                <div class="card">
-                    <h5>{{ $content->name }}</h5>
-                    <p>{{ Str::limit($content->description, 100) }}</p>
-                    <img src="{{ asset('storage/' . $content->path) }}" alt="Content Image">
-                </div>
+                <div class="col-md-6 col-sm-12 mb-4"> <!-- Two cards per row on medium and larger screens -->
+                    <div class="card">
+                        <h5>{{ $content->name }}</h5>
+                        <p>{{ Str::limit($content->description, 100) }}</p>
+                        <img src="{{ asset('storage/' . $content->path) }}" alt="Content Image">
+                    </div>
                 </div>
                 @endforeach
             </div>
@@ -128,4 +129,4 @@
         
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>
-</html> 
+</html>
