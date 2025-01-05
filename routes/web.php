@@ -11,7 +11,7 @@ use App\Http\Controllers\ContentController;
 
 Route::get('/', function () {return view('auth.signup');});
 Route::get('/login', function () {return view('auth.login');});
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard.index');
 Route::get('/carboncalc', function () {return view('user.calculate');});
 
 Route::post('/loginin', [AuthController::class, 'login']);
@@ -29,8 +29,6 @@ Route::post('/content', [ContentController::class, 'store'])->name('content.stor
 Route::put('/content/{id}', [ContentController::class, 'update'])->name('content.update');
 Route::delete('/content/{id}', [ContentController::class, 'destroy'])->name('content.destroy');
 Route::get('/educontent', [ContentController::class, 'uindex'])->name('content.uindex');
-
-
 
 Route::get('/profile', function () {return view('admin.profile');})->name('profile');
 Route::get('/uprofile', function () {return view('user.user-profile');})->name('userprofile');
