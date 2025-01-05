@@ -57,7 +57,7 @@
 
             <!-- Navbar Links -->
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
+            <ul class="navbar-nav me-auto">
                     <li class="nav-item me-3">
                         <a class="nav-link " href="{{ route('emission.index') }}">
                             <i class="fa-solid fa-shoe-prints"></i>

@@ -68,20 +68,20 @@
 
                 <!-- Navbar Links -->
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item me-3">
-                            <a class="nav-link " href="{{ route('emission.index') }}">
-                                <i class="fa-solid fa-shoe-prints"></i>
-                                Emission Category
-                            </a>
-                        </li>
-                        <li class="nav-item me-3">
-                            <a class="nav-link" href="#">
-                                <i class="fa-solid fa-image"></i>
-                                Manage Education Content
-                            </a>
-                        </li>
-                    </ul>
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item me-3">
+                        <a class="nav-link " href="{{ route('emission.index') }}">
+                            <i class="fa-solid fa-shoe-prints"></i>
+                            Emission Category
+                        </a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link" href="/content-list">
+                            <i class="fa-solid fa-image"></i>
+                            Manage Education Content
+                        </a>
+                    </li>
+                </ul>
 
                     <!-- Profile Avatar and Logout Icon -->
                     <div class="d-flex align-items-center">

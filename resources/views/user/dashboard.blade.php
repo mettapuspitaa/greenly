@@ -172,7 +172,7 @@
                                 <div class="row d-flex justify-content-between align-items-center mt-5 p-3">
                                     <div class="col-8 d-flex">
                                         <h1 class="form-label mb-0" name="emission_km">
-                                            {{ $latestSkor->emission_km ?? '0' }}
+                                            {{ $latestSkor->skor->emission_km ?? '0' }}
                                         </h1>
                                         <p class="mt-3 p-1">kg CO₂e/kg</p>
                                     </div>
@@ -191,7 +191,7 @@
                                 <div class="row d-flex justify-content-between align-items-center mt-5 p-3">
                                     <div class="col-8 d-flex">
                                         <h1 class="form-label mb-0" name="emission_food">
-                                            {{ $latestSkor->emission_food ?? '0' }}
+                                            {{ $latestSkor->skor->emission_food ?? '0' }}
                                         </h1>
                                         <p class="mt-3 p-1">kg CO₂e/kg</p>
                                     </div>
@@ -213,7 +213,7 @@
                                 <div class="row d-flex justify-content-between align-items-center mt-5 p-3">
                                     <div class="col-8 d-flex">
                                         <h1 class="form-label mb-0" name="emission_kwh">
-                                            {{ $latestSkor->emission_kwh ?? '0' }}
+                                            {{ $latestSkor->skor->emission_kwh ?? '0' }}
                                         </h1>
                                         <p class="mt-3 p-1">kg CO₂e/kg</p>
                                     </div>
@@ -233,7 +233,7 @@
                                 <div class="row d-flex justify-content-between align-items-center mt-5 p-3">
                                     <div class="col-8 d-flex">
                                         <h1 class="form-label mb-0" name="totalemission">
-                                            {{ $latestSkor->emission_food + $latestSkor->emission_kwh + $latestSkor->emission_km ?? '0' }}
+                                            {{ $latestSkor->skor->emission_food + $latestSkor->skor->emission_kwh + $latestSkor->skor->emission_km ?? '0' }}
                                         </h1>
                                         <p class="mt-3 p-1">kg CO₂e/kg</p>
                                     </div>
@@ -247,6 +247,9 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-body">
+                                <h3 class="form-label mb-0" name="totalemission">
+                                    {{ $latestSkor->rekomendasi ?? '-' }}
+                                </h3>
                             </div>
                         </div>
                     </div>

@@ -282,7 +282,7 @@
 
                         // Get recommendation from Python API
                         try {
-                            const apiResponse = await fetch('http://127.0.0.1:5000/calculate', {
+                            const apiResponse = await fetch('https://93d7-2404-8000-1024-4d35-a585-418a-273d-6db9.ngrok-free.app/calculate', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',

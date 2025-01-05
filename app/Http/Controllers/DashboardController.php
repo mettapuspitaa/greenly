@@ -13,20 +13,15 @@ class DashboardController extends Controller
         $user = Auth::user(); // Mendapatkan user yang sedang login
 
         // Ambil history terbaru untuk tanggal hari ini berdasarkan user_id
-        $latestHistory = History::where('user_id', $user->id)
-            ->whereDate('date', now()->toDateString())
-            ->with('skor') // Eager loading relasi skor
-            ->first();
+        $myhistories = History::with(['skor', 'user'])
+            ->whereDate('created_at', today())
+            ->where('user_id', $user->id) // Filter hanya untuk user yang login
+            ->get();
 
-        // Jika history tidak ada, gunakan nilai default
-        $latestSkor = $latestHistory?->skor ?? (object) [
-            'emission_km' => 0,
-            'emission_kwh' => 0,
-            'emission_food' => 0,
-            'food' => 0,
-            'energy' => 0,
-            'transport' => 0,
-        ];
+        $latestSkor = $myhistories
+            ->sortByDesc('created_at')
+            ->first(); 
+
         $histories = History::with(['skor', 'user'])
             ->whereDate('created_at', today())
             ->get()
@@ -43,6 +38,7 @@ class DashboardController extends Controller
             })
             ->take(3);
 
+        
         return view('user.dashboard', compact('latestSkor','histories'));
     }
 }
