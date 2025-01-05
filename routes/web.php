@@ -38,6 +38,6 @@ Route::post('/profile/update', [AuthController::class, 'updateProfile'])->name('
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/emission-all-categories', [EmissionController::class, 'fetchAllCategories'])->name('emission.allCategories');
 
-Route::get('/history', [HistoryController::class, 'index']);
+Route::get('/history', [HistoryController::class, 'index'])->name('user.history');
 Route::post('/save-skor', [SkorController::class, 'store'])->middleware('auth')->name('save-skor');
-Route::get('/leaderboard', [LeaderboardController::class, 'index']);
+Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('user.leaderboard');;
