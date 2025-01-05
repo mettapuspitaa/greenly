@@ -22,11 +22,20 @@ class EmissionController extends Controller
             'type' => 'required|string|max:255',
             'emission' => 'required|numeric',
         ]);
-
-        Emission::create($request->all()); // Save to database
-
+    
+        // Get all input data
+        $data = $request->all();
+    
+        // Check if type is 'food', divide emission by 4
+        if ($data['type'] === 'food') {
+            $data['emission'] = $data['emission'] / 4;
+        }
+    
+        // Save to database
+        Emission::create($data);
+    
         return redirect()->route('emission.index')->with('success', 'Emission created successfully.');
-    }
+    }    
     
     
     public function edit(Emission $emission)
@@ -42,11 +51,21 @@ class EmissionController extends Controller
             'type' => 'required|string|max:255',
             'emission' => 'required|numeric',
         ]);
-
-        $emission->update($request->all()); // Update emission in database
-
+    
+        // Get all input data
+        $data = $request->all();
+    
+        // Check if type is 'food', divide emission by 4
+        if ($data['type'] === 'food') {
+            $data['emission'] = $data['emission'] / 4;
+        }
+    
+        // Update emission in database
+        $emission->update($data);
+    
         return redirect()->route('emission.index')->with('success', 'Emission updated successfully.');
     }
+    
     
     
     public function destroy(Emission $emission)

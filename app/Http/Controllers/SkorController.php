@@ -18,6 +18,7 @@ class SkorController extends Controller
             'food' => 'required|string',
             'energy' => 'required|string',
             'transport' => 'required|string',
+            'recommendation' => 'required|string',
         ]);
 
         // Simpan skor
@@ -34,7 +35,7 @@ class SkorController extends Controller
         History::create([
             'skor_id' => $skor->id,
             'user_id' => Auth::id(),
-            'rekomendasi' => 'Kurangi konsumsi energi untuk mengurangi jejak karbon',
+            'rekomendasi' => $validated['recommendation'],
             'date' => now(),
         ]);
 

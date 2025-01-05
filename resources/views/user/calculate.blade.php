@@ -210,36 +210,39 @@
                     const calculateButton = document.querySelector('button[id="calc"]');
                     const categoryDetails = {};
 
-                    calculateButton.addEventListener('click', function (e) {
+                    calculateButton.addEventListener('click', async function (e) {
                         e.preventDefault();
 
                         let totalEmission = 0;
+                        let transportationTotal = 0;
+                        let energyTotal = 0;
+                        let foodEmission = 0;
 
-                        // Loop melalui setiap kartu kategori
+                        // Calculate emissions for each category
                         document.querySelectorAll('.card').forEach(card => {
                             card.querySelectorAll('.row').forEach(row => {
                                 const categoryType = row.querySelector('.emission-category');
                                 const valueInput = row.querySelector('input[type="number"]');
 
                                 if (categoryType && categoryType.value) {
-                                    // Mendapatkan nama kategori dan faktor emisi dari opsi yang dipilih
                                     const categoryName = categoryType.options[categoryType.selectedIndex].textContent;
                                     const emissionFactor = parseFloat(categoryType.options[categoryType.selectedIndex].getAttribute('data-emission-factor')) || 0;
 
-                                    // Mendapatkan nilai input pengguna
                                     let userValue;
                                     if (categoryType.id === 'food') {
-                                        userValue = 1; // Untuk food, anggap 1 unit
-                                    } else if (valueInput && valueInput.value) {
-                                        userValue = parseFloat(valueInput.value);
+                                        userValue = 1;
+                                        foodEmission += emissionFactor;
                                     } else {
-                                        userValue = 0;
+                                        userValue = valueInput && valueInput.value ? parseFloat(valueInput.value) : 0;
+                                        if (categoryType.id === 'transportation') {
+                                            transportationTotal += emissionFactor * userValue;
+                                        } else if (categoryType.id === 'energy') {
+                                            energyTotal += emissionFactor * userValue;
+                                        }
                                     }
 
-                                    // Menghitung emisi
                                     const emission = emissionFactor * userValue;
 
-                                    // Mengelompokkan berdasarkan kategori
                                     if (!categoryDetails[categoryType.id]) {
                                         categoryDetails[categoryType.id] = {
                                             items: [],
@@ -249,14 +252,12 @@
 
                                     categoryDetails[categoryType.id].items.push(categoryName);
                                     categoryDetails[categoryType.id].totalEmission += emission;
-
-                                    // Menambah emisi ke total keseluruhan
                                     totalEmission += emission;
                                 }
                             });
                         });
 
-                        // Menyusun detail untuk ditampilkan
+                        // Prepare modal content without recommendation first
                         const detailsList = Object.entries(categoryDetails).map(([key, data]) => {
                             const itemsList = data.items.join(', ');
                             return `
@@ -266,18 +267,103 @@
                             `;
                         }).join('');
 
-                        // Menampilkan total emisi dan detail di modal
+                        // Show modal with loading state for recommendation
                         document.getElementById('totalEmission').textContent = totalEmission.toFixed(2);
                         document.getElementById('resultModal').querySelector('.modal-body').innerHTML = `
                             <p>Your total emission is: <strong>${totalEmission.toFixed(2)} kg CO₂</strong></p>
                             <ul>${detailsList}</ul>
+                            <hr>
+                            <p><strong>Recommendation:</strong></p>
+                            <p>Loading recommendation...</p>
                         `;
 
                         const resultModal = new bootstrap.Modal(document.getElementById('resultModal'));
                         resultModal.show();
+
+                        // Get recommendation from Python API
+                        try {
+                            const apiResponse = await fetch('http://127.0.0.1:5000/calculate', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    transportation: transportationTotal,
+                                    energy_consumption: energyTotal,
+                                    diet: foodEmission
+                                })
+                            });
+
+                            if (!apiResponse.ok) {
+                                throw new Error(`HTTP error! status: ${apiResponse.status}`);
+                            }
+
+                            const recommendationData = await apiResponse.json();
+
+                            // Update modal with recommendation
+                            document.getElementById('resultModal').querySelector('.modal-body').innerHTML = `
+                                <p>Your total emission is: <strong>${totalEmission.toFixed(2)} kg CO₂</strong></p>
+                                <ul>${detailsList}</ul>
+                                <hr>
+                                <p><strong>Recommendation:</strong></p>
+                                <p>${recommendationData.recommendation}</p>
+                            `;
+
+                            // Store recommendation for saving to database
+                            categoryDetails.recommendation = recommendationData.recommendation;
+
+                        } catch (error) {
+                            console.error('Error getting recommendation:', error);
+                            // Update modal to show error
+                            document.getElementById('resultModal').querySelector('.modal-body').innerHTML = `
+                                <p>Your total emission is: <strong>${totalEmission.toFixed(2)} kg CO₂</strong></p>
+                                <ul>${detailsList}</ul>
+                                <hr>
+                                <p class="text-danger">Failed to get recommendation. Please try again later.</p>
+                                <p class="text-muted">Error: ${error.message}</p>
+                            `;
+                            categoryDetails.recommendation = 'Failed to get recommendation due to technical error';
+                        }
                     });
 
-                    // Mengisi dropdown berdasarkan data dari backend
+                    // Save button click handler
+                    document.getElementById('saveDataButton').addEventListener('click', function (event) {
+                        event.preventDefault();
+
+                        const data = {
+                            emission_km: categoryDetails['transportation']?.totalEmission || 0,
+                            emission_kwh: categoryDetails['energy']?.totalEmission || 0,
+                            emission_food: categoryDetails['food']?.totalEmission || 0,
+                            food: categoryDetails['food']?.items.join(', ') || '',
+                            energy: categoryDetails['energy']?.items.join(', ') || '',
+                            transport: categoryDetails['transportation']?.items.join(', ') || '',
+                            recommendation: categoryDetails.recommendation || 'No recommendation available'
+                        };
+
+                        fetch('/save-skor', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            },
+                            body: JSON.stringify(data),
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.message === 'Data saved successfully') {
+                                    alert('Data saved successfully!');
+                                    location.reload();
+                                } else {
+                                    alert('Failed to save data.');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error saving data:', error);
+                                alert('An error occurred. Please try again.');
+                            });
+                    });
+
+                    // Load emission categories from backend
                     fetch('/emission-all-categories')
                         .then(response => response.json())
                         .then(data => {
@@ -302,7 +388,7 @@
                             });
                         });
 
-                    // Tambah dan hapus baris dalam kategori
+                    // Add and remove rows functionality
                     document.querySelectorAll('#addmore').forEach(button => {
                         button.addEventListener('click', function (e) {
                             e.preventDefault();
@@ -310,6 +396,7 @@
                             const originalRow = cardBody.querySelector('.row');
                             const newRow = originalRow.cloneNode(true);
 
+                            // Clear input values and reset select in the new row
                             newRow.querySelectorAll('input').forEach(input => input.value = '');
                             newRow.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
 
@@ -329,41 +416,6 @@
                                 alert("You must have at least one row!");
                             }
                         });
-                    });
-
-                    document.getElementById('saveDataButton').addEventListener('click', function (event) {
-                        event.preventDefault();
-
-                        const data = {
-                            emission_km: categoryDetails['transportation'].totalEmission || 0,
-                            emission_kwh: categoryDetails['energy'].totalEmission || 0,
-                            emission_food: categoryDetails['food'].totalEmission || 0,
-                            food: categoryDetails['food'].items.join(', ') || '',
-                            energy: categoryDetails['energy'].items.join(', ') || '',
-                            transport: categoryDetails['transportation'].items.join(', ') || '',
-                        };
-
-                        fetch('/save-skor', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                            },
-                            body: JSON.stringify(data),
-                        })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.message === 'Data saved successfully') {
-                                    alert('Data saved successfully!');
-                                    location.reload(); // Optional, untuk me-refresh halaman
-                                } else {
-                                    alert('Failed to save data.');
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Error saving data:', error);
-                                alert('An error occurred. Please try again.');
-                            });
                     });
                 });
             </script>

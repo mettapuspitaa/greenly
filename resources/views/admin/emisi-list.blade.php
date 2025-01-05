@@ -166,7 +166,7 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="emission" class="form-label">Emission(for each 1/4kg)</label>
+                        <label for="emission" class="form-label">Emission(The carbon emission input per 1 kg will be divided by 4 by the system to determine 1/4 kg.)</label>
                         <input type="number" step="0.01" class="form-control" id="emission" name="emission" required>
                     </div>
                     <button type="submit" class="btn btn-custom">Save</button>
