@@ -123,18 +123,22 @@
 
     <div class="container content-container mt-4">
         <div class="row">
-            <!-- Loop through contents -->
-            @foreach ($contents as $content)
-            <div class="col-md-6 col-sm-12 mb-4">
-                <div class="card">
-                    <h5>{{ $content->name }}</h5>
-                    <p>{{ Str::limit($content->description, 100) }}</p>
-                    <img src="{{ asset('storage/' . $content->path) }}" alt="Content Image">
+            @forelse ($contents as $content)
+                <div class="col-md-6 col-sm-12 mb-4">
+                    <div class="card">
+                        <h5>{{ $content->name }}</h5>
+                        <p>{{ Str::limit($content->description, 100) }}</p>
+                        <img src="{{ asset('storage/' . $content->path) }}" alt="Content Image">
+                    </div>
                 </div>
-            </div>
-            @endforeach
+            @empty
+                <div class="col-12">
+                    <p class="text-center">No educational content available. Check back later!</p>
+                </div>
+            @endforelse
         </div>
     </div>
+
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 

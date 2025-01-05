@@ -162,24 +162,6 @@
     <div class="container mt-5">
         <!-- Podium Section -->
         <div class="podium">
-            @if(isset($histories[2]))
-                <div class="podium-item second">
-                    <div class="podium-content">
-                        <div class="podium-rank">2nd</div>
-                        <div class="podium-name">{{ $histories[2]->user->name }}</div>
-                        <div class="podium-score">{{ $histories[2]->skor->emission_km + $histories[2]->skor->emission_kwh + $histories[2]->skor->emission_food }} CO₂e/kg</div>
-                    </div>
-                    <button class="btn btn-sm detail-btn" data-bs-toggle="modal" data-bs-target="#historyModal"
-                            data-date="{{ $histories[2]->created_at->format('Y-m-d H:i') }}"
-                            data-user="{{ $histories[2]->user->name }}"
-                            data-emission-food="{{ $histories[2]->skor->emission_food }}"
-                            data-emission-kwh="{{ $histories[2]->skor->emission_kwh }}"
-                            data-emission-km="{{ $histories[2]->skor->emission_km }}">
-                        Details
-                    </button>
-                </div>
-            @endif
-
             @if(isset($histories[1]))
                 <div class="podium-item first">
                     <div class="podium-content">
@@ -193,6 +175,24 @@
                             data-emission-food="{{ $histories[1]->skor->emission_food }}"
                             data-emission-kwh="{{ $histories[1]->skor->emission_kwh }}"
                             data-emission-km="{{ $histories[1]->skor->emission_km }}">
+                        Details
+                    </button>
+                </div>
+            @endif
+
+            @if(isset($histories[2]))
+                <div class="podium-item second">
+                    <div class="podium-content">
+                        <div class="podium-rank">2nd</div>
+                        <div class="podium-name">{{ $histories[2]->user->name }}</div>
+                        <div class="podium-score">{{ $histories[2]->skor->emission_km + $histories[2]->skor->emission_kwh + $histories[2]->skor->emission_food }} CO₂e/kg</div>
+                    </div>
+                    <button class="btn btn-sm detail-btn" data-bs-toggle="modal" data-bs-target="#historyModal"
+                            data-date="{{ $histories[2]->created_at->format('Y-m-d H:i') }}"
+                            data-user="{{ $histories[2]->user->name }}"
+                            data-emission-food="{{ $histories[2]->skor->emission_food }}"
+                            data-emission-kwh="{{ $histories[2]->skor->emission_kwh }}"
+                            data-emission-km="{{ $histories[2]->skor->emission_km }}">
                         Details
                     </button>
                 </div>
@@ -215,7 +215,14 @@
                     </button>
                 </div>
             @endif
+
+            @if(empty($histories))
+                <div class="no-data-message">
+                    <p>No leaderboard data available. Start tracking your carbon footprint to see your rank here.</p>
+                </div>
+            @endif
         </div>
+
 
         <!-- Table Section -->
         <table class="table table-bordered" style="margin-top:50px">

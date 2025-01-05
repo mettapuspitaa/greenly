@@ -122,26 +122,30 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($histories as $history) <!-- Ubah $history menjadi $histories -->
+                @forelse ($histories as $history)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ \Carbon\Carbon::parse($history->date)->format('d-m-Y') }}</td> <!-- Tampilkan tanggal dengan format yang sesuai -->
-                        <td>{{ $history->rekomendasi }}</td> <!-- Menampilkan rekomendasi -->
-                        <td>{{ $history->user->name }}</td> <!-- Menampilkan nama user yang terkait -->
-                        <td>{{ $history->skor->emission_food + $history->skor->emission_km+$history->skor->emission_kwh}}</td> <!-- Menampilkan data skor terkait -->
+                        <td>{{ \Carbon\Carbon::parse($history->date)->format('d-m-Y') }}</td>
+                        <td>{{ $history->rekomendasi }}</td>
+                        <td>{{ $history->user->name }}</td>
+                        <td>{{ $history->skor->emission_food + $history->skor->emission_km + $history->skor->emission_kwh }}</td>
                         <td>
                             <a href="#" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#historyModal"
-                                data-date="{{ \Carbon\Carbon::parse($history->date)->format('d-m-Y') }}"
-                                data-rekomendasi="{{ $history->rekomendasi }}"
-                                data-user="{{ $history->user->name }}"
-                                data-emission_food="{{ $history->skor->emission_food }}"
-                                data-emission_kwh="{{ $history->skor->emission_kwh }}"
-                                data-emission_km="{{ $history->skor->emission_km }}">
+                            data-date="{{ \Carbon\Carbon::parse($history->date)->format('d-m-Y') }}"
+                            data-rekomendasi="{{ $history->rekomendasi }}"
+                            data-user="{{ $history->user->name }}"
+                            data-emission_food="{{ $history->skor->emission_food }}"
+                            data-emission_kwh="{{ $history->skor->emission_kwh }}"
+                            data-emission_km="{{ $history->skor->emission_km }}">
                                 Detail
                             </a>
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="6" class="text-center">No records found</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
         </div>

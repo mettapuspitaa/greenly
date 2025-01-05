@@ -233,7 +233,7 @@
                                 <div class="row d-flex justify-content-between align-items-center mt-5 p-3">
                                     <div class="col-8 d-flex">
                                         <h1 class="form-label mb-0" name="totalemission">
-                                            {{ $latestSkor->skor->emission_food + $latestSkor->skor->emission_kwh + $latestSkor->skor->emission_km ?? '0' }}
+                                            {{ isset($latestSkor->skor) ? $latestSkor->skor->emission_food + $latestSkor->skor->emission_kwh + $latestSkor->skor->emission_km : '0' }}
                                         </h1>
                                         <p class="mt-3 p-1">kg CO₂e/kg</p>
                                     </div>
