@@ -216,11 +216,11 @@
                 </div>
             @endif
 
-            @if(empty($histories))
+            @if(!isset($histories) || $histories->isEmpty())
                 <div class="no-data-message">
                     <p>No leaderboard data available. Start tracking your carbon footprint to see your rank here.</p>
                 </div>
-            @endif
+            @endif  
         </div>
 
 
